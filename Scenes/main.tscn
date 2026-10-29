@@ -1,0 +1,137 @@
+[gd_scene format=3 uid="uid://brafdcxyyarrp"]
+
+[ext_resource type="PhysicsMaterial" uid="uid://b3ou01b5moeuk" path="res://Material/ball.tres" id="2_8gbba"]
+[ext_resource type="PackedScene" uid="uid://bn5lw7jht8j7q" path="res://Scenes/player.tscn" id="2_21xkr"]
+[ext_resource type="PackedScene" uid="uid://cfaxfasvurx7n" path="res://Scenes/enemy.tscn" id="3_6bp64"]
+[ext_resource type="Script" uid="uid://nxwem2wmdd1i" path="res://Scripts/ball.gd" id="3_8gbba"]
+[ext_resource type="Script" uid="uid://j3gps485by0t" path="res://Scripts/collision_check.gd" id="6_21xkr"]
+[ext_resource type="PackedScene" uid="uid://dsi8m8gw40s18" path="res://Scenes/ui.tscn" id="6_344ge"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_4afsq"]
+
+[sub_resource type="Sky" id="Sky_qk1r3"]
+sky_material = SubResource("PhysicalSkyMaterial_4afsq")
+
+[sub_resource type="Environment" id="Environment_xu33y"]
+background_mode = 1
+background_energy_multiplier = 2.0
+sky = SubResource("Sky_qk1r3")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jjvhh"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4afsq"]
+radius = 0.18
+
+[sub_resource type="SphereMesh" id="SphereMesh_4afsq"]
+radius = 0.18
+height = 0.36
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l7skb"]
+size = Vector3(0.2, 12, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wctvl"]
+size = Vector3(0.2, 12, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wctvl"]
+size = Vector3(0.3, 13, 1995.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tmnyb"]
+size = Vector3(8, 0.3, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y5kva"]
+size = Vector3(7.9, 0.3, 1)
+
+[node name="Main" type="Node3D" unique_id=199358449]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=653998805]
+environment = SubResource("Environment_xu33y")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1745972023]
+transform = Transform3D(-0.83651614, -0.5476677, 0.017337585, 0.4249502, -0.6284506, 0.6515112, -0.34591573, 0.5523672, 0.7584406, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1004902152]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.5)
+
+[node name="ball" type="RigidBody3D" parent="." unique_id=130872433 groups=["ball"]]
+axis_lock_linear_z = true
+physics_material_override = SubResource("PhysicsMaterial_jjvhh")
+gravity_scale = 0.0
+script = ExtResource("3_8gbba")
+speed = 5.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ball" unique_id=1530694904]
+shape = SubResource("SphereShape3D_4afsq")
+debug_color = Color(0.13743007, 0.43405473, 0.96293765, 0.41960785)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ball" unique_id=71253531]
+mesh = SubResource("SphereMesh_4afsq")
+
+[node name="Player" parent="." unique_id=1820030867 instance=ExtResource("2_21xkr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 0)
+
+[node name="Enemy" parent="." unique_id=266264672 node_paths=PackedStringArray("target") instance=ExtResource("3_6bp64")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+move_speed = 4.2
+target = NodePath("../ball")
+
+[node name="Walls" type="Node3D" parent="." unique_id=867232553]
+
+[node name="Wall_left" type="StaticBody3D" parent="Walls" unique_id=35976099]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+physics_material_override = ExtResource("2_8gbba")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Wall_left" unique_id=1017142960]
+shape = SubResource("BoxShape3D_l7skb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Walls/Wall_left" unique_id=666053705]
+mesh = SubResource("BoxMesh_wctvl")
+
+[node name="Collision_check" type="Area3D" parent="Walls/Wall_left" unique_id=856933272 groups=["Scored"]]
+script = ExtResource("6_21xkr")
+this_is_player_side = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Wall_left/Collision_check" unique_id=2119669062]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05000019, 0, 997.3)
+shape = SubResource("BoxShape3D_wctvl")
+
+[node name="Wall_Right" type="StaticBody3D" parent="Walls" unique_id=1017346592]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+physics_material_override = ExtResource("2_8gbba")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Wall_Right" unique_id=116776397]
+shape = SubResource("BoxShape3D_l7skb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Walls/Wall_Right" unique_id=1843171576]
+mesh = SubResource("BoxMesh_wctvl")
+
+[node name="Collision_check" type="Area3D" parent="Walls/Wall_Right" unique_id=105583226 groups=["Scored"]]
+script = ExtResource("6_21xkr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Wall_Right/Collision_check" unique_id=1292049182]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3841858e-07, 0, 0)
+shape = SubResource("BoxShape3D_wctvl")
+
+[node name="Wall_Top" type="StaticBody3D" parent="Walls" unique_id=529730267]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
+physics_material_override = ExtResource("2_8gbba")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Wall_Top" unique_id=457444245]
+shape = SubResource("BoxShape3D_tmnyb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Walls/Wall_Top" unique_id=1546782546]
+mesh = SubResource("BoxMesh_y5kva")
+
+[node name="Wall_Down" type="StaticBody3D" parent="Walls" unique_id=82535028]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, 0)
+physics_material_override = ExtResource("2_8gbba")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Wall_Down" unique_id=1563621737]
+shape = SubResource("BoxShape3D_tmnyb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Walls/Wall_Down" unique_id=1762975097]
+mesh = SubResource("BoxMesh_y5kva")
+
+[node name="UI" parent="." unique_id=1109227522 instance=ExtResource("6_344ge")]

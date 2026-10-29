@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://bn5lw7jht8j7q"]
+
+[ext_resource type="Script" uid="uid://cpd17asbqe6qe" path="res://Scripts/player.gd" id="1_cvnsp"]
+[ext_resource type="Material" uid="uid://bu54lys05nmum" path="res://Material/player.tres" id="2_6t5aa"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4afsq"]
+size = Vector3(0.2, 1.5, 1)
+
+[sub_resource type="TextMesh" id="TextMesh_4afsq"]
+text = "PLAYER"
+
+[sub_resource type="BoxMesh" id="BoxMesh_4afsq"]
+material = ExtResource("2_6t5aa")
+size = Vector3(0.2, 1.5, 1)
+
+[node name="Player" type="CharacterBody3D" unique_id=1820030867]
+axis_lock_linear_x = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+script = ExtResource("1_cvnsp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=74476378]
+shape = SubResource("BoxShape3D_4afsq")
+debug_color = Color(0.25882354, 0.49803922, 0.6901961, 0.96862745)
+
+[node name="Name" type="MeshInstance3D" parent="." unique_id=2070824752]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9424461, 0)
+mesh = SubResource("TextMesh_4afsq")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=1987946912]
+mesh = SubResource("BoxMesh_4afsq")
