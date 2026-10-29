@@ -4,9 +4,7 @@ A ping pong game made with **Godot** and **GDScript**. The project includes a us
 
 ## Screenshots
 
-Place screenshots in the `screenshots` folder and update these image paths to match your files.
-
-![Ping pong gameplay]![alt text](image.png)
+![Ping pong gameplay]![alt text](Readme/image.png)
 
 ## Project Features
 
