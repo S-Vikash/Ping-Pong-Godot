@@ -4,7 +4,7 @@ A ping pong game made with **Godot** and **GDScript**. The project includes a us
 
 ## Screenshots
 
-![Ping pong gameplay]![alt text](Readme/image.png)
+Ping pong gameplay ![alt text](Readme/image.png)
 
 ## Project Features
 
